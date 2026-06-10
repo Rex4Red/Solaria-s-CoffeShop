@@ -1,0 +1,37 @@
+# Dependencies
+node_modules/
+
+# Build
+dist/
+
+# Environment
+.env
+.env.local
+
+# IDE
+.vscode/
+.idea/
+
+# OS
+.DS_Store
+Thumbs.db
+
+# Agent/AI config (personal per developer)
+AGENT.md
+CLAUDE.md
+.agent-mem/
+.brainsync/
+.cursorrules
+.clineRules
+.agent/
+.agents/
+.windsurfrules
+.gemini/
+.cline/
+.cursor/
+.mcp.json
+.mcp.json.bak
+
+# Logs
+*.log
+npm-debug.log*
