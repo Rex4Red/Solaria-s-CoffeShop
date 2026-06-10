@@ -14,7 +14,7 @@ async function bootstrap() {
 
   // CORS
   app.enableCors({
-    origin: configService.get<string>('FRONTEND_URL', 'http://localhost:3000'),
+    origin: configService.get<string>('FRONTEND_URL', '*'),
     credentials: true,
   });
 
@@ -37,6 +37,12 @@ async function bootstrap() {
     .addTag('Menu', 'Menu items')
     .addTag('Categories', 'Menu categories')
     .addTag('Tables', 'Table management & QR codes')
+    .addTag('Orders', 'Order management')
+    .addTag('Inventory', 'Stock management')
+    .addTag('Members', 'Member management')
+    .addTag('Discounts', 'Discount events')
+    .addTag('Payments', 'Payment simulation')
+    .addTag('Stats', 'Sales analytics & dashboard')
     .build();
 
   const document = SwaggerModule.createDocument(app, swaggerConfig);
