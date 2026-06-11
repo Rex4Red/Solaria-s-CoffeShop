@@ -53,6 +53,16 @@ async function fetchApi<T>(endpoint: string, options: FetchOptions = {}): Promis
 
   if (!response.ok) {
     const errorData = await response.json().catch(() => null);
+
+    // Token kedaluwarsa / tidak valid → bersihkan sesi & arahkan ke login
+    if (response.status === 401 && typeof window !== 'undefined') {
+      localStorage.removeItem('auth_token');
+      localStorage.removeItem('solaria-auth');
+      if (!window.location.pathname.startsWith('/login')) {
+        window.location.href = '/login';
+      }
+    }
+
     throw new ApiError(
       response.status,
       errorData?.message || `API Error: ${response.statusText}`,
