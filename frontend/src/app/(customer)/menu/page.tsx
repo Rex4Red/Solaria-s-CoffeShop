@@ -5,6 +5,7 @@ import { Search, ShoppingBag } from 'lucide-react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import MenuCard from '@/components/customer/MenuCard';
 import CategoryChips from '@/components/customer/CategoryChips';
+import DiscountBanner from '@/components/customer/DiscountBanner';
 import { useCartStore } from '@/store/cartStore';
 import { formatRupiah } from '@/lib/utils';
 import api from '@/lib/api';
@@ -59,6 +60,7 @@ function MenuContent() {
 
   return (
     <div className="safe-bottom-padding">
+      <DiscountBanner />
       {/* Mobile Header */}
       <header className="md:hidden flex justify-between items-center px-4 py-3 bg-surface sticky top-0 z-40 shadow-[0_1px_3px_rgba(61,43,31,0.06)]">
         <div>
