@@ -37,7 +37,7 @@ export default function AdminDashboard() {
     api.members.getAll().then(m => setMemberCount(m.length)).catch(() => setMemberCount(0));
   }, []);
 
-  const totalRevenue = orders.filter(o => o.status === 'COMPLETED').reduce((s, o) => s + o.total, 0);
+  const totalRevenue = orders.filter(o => o.status === 'confirmed').reduce((s, o) => s + o.total, 0);
   const totalOrders = orders.length;
   const totalItems = orders.reduce((s, o) => s + (o.items?.length || 0), 0);
   const recentOrders = orders.slice(0, 10);

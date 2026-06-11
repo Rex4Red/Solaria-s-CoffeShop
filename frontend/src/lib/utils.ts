@@ -69,12 +69,9 @@ export function cn(...classes: (string | false | null | undefined)[]): string {
  */
 export function getStatusLabel(status: string): string {
   const map: Record<string, string> = {
-    PENDING: 'Menunggu',
-    CONFIRMED: 'Dikonfirmasi',
-    PREPARING: 'Diproses',
-    READY: 'Siap',
-    COMPLETED: 'Selesai',
-    CANCELLED: 'Dibatalkan',
+    waiting: 'Menunggu',
+    confirmed: 'Dikonfirmasi',
+    cancelled: 'Dibatalkan',
   };
   return map[status] || status;
 }
@@ -84,12 +81,9 @@ export function getStatusLabel(status: string): string {
  */
 export function getStatusColor(status: string): string {
   const map: Record<string, string> = {
-    PENDING: 'bg-warning-amber/15 text-warning-amber',
-    CONFIRMED: 'bg-info-blue/15 text-info-blue',
-    PREPARING: 'bg-info-blue/15 text-info-blue',
-    READY: 'bg-success-green/15 text-success-green',
-    COMPLETED: 'bg-success-green/15 text-success-green',
-    CANCELLED: 'bg-error-rose/15 text-error-rose',
+    waiting: 'bg-warning-amber/15 text-warning-amber',
+    confirmed: 'bg-success-green/15 text-success-green',
+    cancelled: 'bg-error-rose/15 text-error-rose',
   };
   return map[status] || 'bg-surface-variant text-on-surface-variant';
 }
@@ -99,9 +93,9 @@ export function getStatusColor(status: string): string {
  */
 export function getPaymentMethodLabel(method: string): string {
   const map: Record<string, string> = {
-    QRIS: 'QRIS',
-    BANK_TRANSFER: 'Transfer Bank',
-    CASH: 'Tunai',
+    qris: 'QRIS',
+    transfer_bank: 'Transfer Bank',
+    cash: 'Tunai',
   };
   return map[method] || method;
 }

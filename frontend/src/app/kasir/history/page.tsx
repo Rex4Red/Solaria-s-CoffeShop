@@ -13,7 +13,7 @@ export default function KasirHistoryPage() {
     api.orders.getAll().then(setOrders).catch(console.error).finally(() => setLoading(false));
   }, []);
 
-  const confirmed = orders.filter(o => o.status !== 'PENDING');
+  const confirmed = orders.filter(o => o.status !== 'waiting');
 
   return (
     <div>

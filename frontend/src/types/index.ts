@@ -38,23 +38,19 @@ export interface Table {
 }
 
 export type OrderStatus =
-  | 'PENDING'
-  | 'CONFIRMED'
-  | 'PREPARING'
-  | 'READY'
-  | 'COMPLETED'
-  | 'CANCELLED';
+  | 'waiting'
+  | 'confirmed'
+  | 'cancelled';
 
 export type PaymentStatus =
-  | 'PENDING'
-  | 'PAID'
-  | 'FAILED'
-  | 'REFUNDED';
+  | 'pending'
+  | 'paid'
+  | 'failed';
 
 export type PaymentMethod =
-  | 'QRIS'
-  | 'BANK_TRANSFER'
-  | 'CASH';
+  | 'qris'
+  | 'transfer_bank'
+  | 'cash';
 
 export interface OrderItem {
   id: string;

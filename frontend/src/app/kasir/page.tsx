@@ -13,7 +13,7 @@ export default function KasirPage() {
 
   const fetchOrders = async () => {
     try {
-      const data = await api.orders.getAll({ status: 'PENDING' });
+      const data = await api.orders.getAll({ status: 'waiting' });
       setOrders(data);
     } catch { console.error('Failed to fetch'); } finally { setLoading(false); }
   };

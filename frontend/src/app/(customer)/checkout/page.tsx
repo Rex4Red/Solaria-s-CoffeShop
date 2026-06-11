@@ -9,9 +9,9 @@ import api from '@/lib/api';
 import toast from 'react-hot-toast';
 
 const paymentMethods = [
-  { id: 'QRIS', label: 'QRIS', desc: 'Scan QR untuk bayar', icon: QrCode },
-  { id: 'BANK_TRANSFER', label: 'Transfer Bank', desc: 'BCA, Mandiri, BNI', icon: Building2 },
-  { id: 'CASH', label: 'Tunai', desc: 'Bayar di kasir', icon: Banknote },
+  { id: 'qris', label: 'QRIS', desc: 'Scan QR untuk bayar', icon: QrCode },
+  { id: 'transfer_bank', label: 'Transfer Bank', desc: 'BCA, Mandiri, BNI', icon: Building2 },
+  { id: 'cash', label: 'Tunai', desc: 'Bayar di kasir', icon: Banknote },
 ];
 
 export default function CheckoutPage() {
@@ -21,7 +21,7 @@ export default function CheckoutPage() {
   const tableNumber = useCartStore((s) => s.tableNumber);
   const getSubtotal = useCartStore((s) => s.getSubtotal);
   const clearCart = useCartStore((s) => s.clearCart);
-  const [selectedMethod, setSelectedMethod] = useState('QRIS');
+  const [selectedMethod, setSelectedMethod] = useState('qris');
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState('');
   const total = getSubtotal();

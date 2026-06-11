@@ -36,7 +36,7 @@ export default function AdminPaymentsPage() {
                     <td className="px-4 py-3 font-mono font-bold text-primary">{p.order?.orderNumber || p.orderId.slice(0, 8)}</td>
                     <td className="px-4 py-3">{getPaymentMethodLabel(p.method)}</td>
                     <td className="px-4 py-3 font-mono">{formatRupiah(p.amount)}</td>
-                    <td className="px-4 py-3"><span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${p.status === 'PAID' ? 'bg-success-green/15 text-success-green' : 'bg-warning-amber/15 text-warning-amber'}`}>{p.status}</span></td>
+                    <td className="px-4 py-3"><span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${p.status === 'paid' ? 'bg-success-green/15 text-success-green' : 'bg-warning-amber/15 text-warning-amber'}`}>{p.status}</span></td>
                     <td className="px-4 py-3 text-on-surface-variant hidden md:table-cell">{formatDateTime(p.createdAt)}</td>
                   </tr>
                 ))}
