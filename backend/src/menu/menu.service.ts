@@ -106,6 +106,14 @@ export class MenuService {
   async remove(id: string) {
     const item = await this.findOne(id);
 
+    // Cegah hapus jika menu sudah dipakai di pesanan (jaga riwayat pesanan)
+    const orderCount = await this.prisma.orderItem.count({ where: { menuItemId: id } });
+    if (orderCount > 0) {
+      throw new BadRequestException(
+        `Menu "${item.name}" tidak bisa dihapus karena sudah terpakai di ${orderCount} pesanan. Nonaktifkan menu ini saja (matikan ketersediaannya).`,
+      );
+    }
+
     // Delete image from storage if exists
     if (item.imageUrl) {
       await this.storage.deleteMenuImage(item.imageUrl);

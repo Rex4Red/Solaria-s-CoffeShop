@@ -114,7 +114,14 @@ export default function AdminMenuPage() {
 
   const handleDelete = async (id: string) => {
     if (!confirm('Hapus menu ini?')) return;
-    try { await api.menu.delete(id); setItems(items.filter(i => i.id !== id)); toast.success('Menu dihapus'); } catch { toast.error('Gagal menghapus'); }
+    try {
+      await api.menu.delete(id);
+      setItems(items.filter(i => i.id !== id));
+      toast.success('Menu dihapus');
+    } catch (err) {
+      const msg = err instanceof Error && err.message ? err.message : 'Gagal menghapus';
+      toast.error(msg);
+    }
   };
 
   const handleToggle = async (item: MenuItem) => {
