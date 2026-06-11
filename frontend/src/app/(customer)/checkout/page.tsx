@@ -1,10 +1,11 @@
 'use client';
 
-import { useState } from 'react';
+import { useState, useEffect } from 'react';
 import { useRouter } from 'next/navigation';
-import { ArrowLeft, QrCode, Building2, Banknote, Loader2 } from 'lucide-react';
+import { ArrowLeft, QrCode, Building2, Banknote, Loader2, Sparkles, UserPlus } from 'lucide-react';
 import { useCartStore } from '@/store/cartStore';
-import { formatRupiah, cn } from '@/lib/utils';
+import { useAuthStore } from '@/store/authStore';
+import { formatRupiah, cn, computeMemberDiscount, type DiscountForCalc } from '@/lib/utils';
 import api from '@/lib/api';
 import toast from 'react-hot-toast';
 
@@ -21,10 +22,25 @@ export default function CheckoutPage() {
   const tableNumber = useCartStore((s) => s.tableNumber);
   const getSubtotal = useCartStore((s) => s.getSubtotal);
   const clearCart = useCartStore((s) => s.clearCart);
+  const user = useAuthStore((s) => s.user);
+
   const [selectedMethod, setSelectedMethod] = useState('qris');
   const [loading, setLoading] = useState(false);
   const [notes, setNotes] = useState('');
-  const total = getSubtotal();
+  const [discounts, setDiscounts] = useState<DiscountForCalc[]>([]);
+
+  const isMember = user?.role === 'MEMBER';
+
+  useEffect(() => {
+    api.discounts.getAll().then((d) => setDiscounts(d as unknown as DiscountForCalc[])).catch(() => setDiscounts([]));
+  }, []);
+
+  const subtotal = getSubtotal();
+  // Diskon hanya berlaku untuk member yang login
+  const calc = isMember
+    ? computeMemberDiscount(items, discounts)
+    : { subtotal, discountTotal: 0, grandTotal: subtotal };
+  const total = calc.grandTotal;
 
   const handleCheckout = async () => {
     if (!tableToken) { toast.error('Meja belum terdaftar'); return; }
@@ -32,6 +48,7 @@ export default function CheckoutPage() {
     try {
       const order = await api.orders.create({
         tableToken,
+        memberId: isMember ? user?.id : undefined,
         items: items.map((i) => ({ menuItemId: i.menuItem.id, qty: i.quantity, notes: i.notes })),
         notes: notes || undefined,
       });
@@ -63,8 +80,38 @@ export default function CheckoutPage() {
             </div>
           ))}
           <div className="border-t border-oat-milk my-3" />
-          <div className="flex justify-between font-semibold"><span>Total</span><span className="font-mono">{formatRupiah(total)}</span></div>
+          <div className="flex justify-between text-sm text-on-surface-variant mb-1">
+            <span>Subtotal</span>
+            <span className="font-mono">{formatRupiah(calc.subtotal)}</span>
+          </div>
+          {isMember && calc.discountTotal > 0 && (
+            <div className="flex justify-between text-sm text-success-green mb-1">
+              <span className="flex items-center gap-1"><Sparkles size={13} />Diskon Member</span>
+              <span className="font-mono">-{formatRupiah(calc.discountTotal)}</span>
+            </div>
+          )}
+          <div className="flex justify-between font-semibold mt-1">
+            <span>Total</span>
+            <span className="font-mono">{formatRupiah(total)}</span>
+          </div>
         </div>
+
+        {/* Info diskon untuk non-member */}
+        {!isMember && (
+          <button
+            onClick={() => router.push('/member')}
+            className="w-full mb-4 flex items-center gap-3 p-3.5 rounded-xl bg-primary/5 border border-primary/20 text-left active:scale-[0.99] transition-transform"
+          >
+            <div className="w-9 h-9 rounded-full bg-primary/10 flex items-center justify-center shrink-0 text-primary">
+              <UserPlus size={18} />
+            </div>
+            <div className="flex-grow">
+              <p className="text-sm font-semibold text-primary">Login member untuk dapat diskon</p>
+              <p className="text-xs text-on-surface-variant">Potongan harga otomatis saat ada promo aktif</p>
+            </div>
+          </button>
+        )}
+
         <textarea value={notes} onChange={(e) => setNotes(e.target.value)} placeholder="Catatan (opsional)..." className="w-full bg-vanilla-mist border border-oat-milk rounded-xl px-4 py-3 text-sm resize-none h-20 mb-4 focus:outline-none focus:border-primary" />
         <h3 className="font-sans font-semibold text-sm mb-3">Metode Pembayaran</h3>
         <div className="space-y-2.5 mb-6">

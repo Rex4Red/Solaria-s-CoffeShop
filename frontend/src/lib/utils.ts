@@ -25,6 +25,59 @@ export function getOrderNumber(id?: string): string {
 }
 
 /**
+ * Hitung diskon member berdasarkan event diskon aktif.
+ * Mereplikasi logika backend: per item, event yang cocok terakhir menang.
+ */
+export interface DiscountForCalc {
+  isActive: boolean;
+  startAt: string;
+  endAt: string;
+  type: 'percentage' | 'fixed';
+  value: number;
+  appliesToAll: boolean;
+  items?: { menuItemId: string }[];
+}
+
+export function computeMemberDiscount(
+  cart: { menuItem: { id: string; price: number }; quantity: number }[],
+  discounts: DiscountForCalc[],
+): { subtotal: number; discountTotal: number; grandTotal: number } {
+  const now = Date.now();
+  const active = discounts.filter(
+    (d) =>
+      d.isActive &&
+      new Date(d.startAt).getTime() <= now &&
+      new Date(d.endAt).getTime() >= now,
+  );
+
+  const map = new Map<string, { type: string; value: number }>();
+  for (const d of active) {
+    if (d.appliesToAll) {
+      for (const c of cart) map.set(c.menuItem.id, { type: d.type, value: Number(d.value) });
+    } else {
+      for (const it of d.items || []) map.set(it.menuItemId, { type: d.type, value: Number(d.value) });
+    }
+  }
+
+  let subtotal = 0;
+  let discountTotal = 0;
+  for (const c of cart) {
+    const price = Number(c.menuItem.price);
+    const itemSubtotal = price * c.quantity;
+    subtotal += itemSubtotal;
+    const disc = map.get(c.menuItem.id);
+    if (disc) {
+      discountTotal += disc.type === 'percentage'
+        ? (itemSubtotal * disc.value) / 100
+        : disc.value * c.quantity;
+    }
+  }
+
+  const grandTotal = Math.max(0, subtotal - discountTotal);
+  return { subtotal, discountTotal, grandTotal };
+}
+
+/**
  * Format date to Indonesian locale
  */
 export function formatDate(dateString: string): string {
