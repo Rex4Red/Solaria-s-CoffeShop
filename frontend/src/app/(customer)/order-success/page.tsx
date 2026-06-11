@@ -4,11 +4,12 @@ import { Suspense } from 'react';
 import { useRouter, useSearchParams } from 'next/navigation';
 import { CheckCircle2, RotateCcw } from 'lucide-react';
 import Image from 'next/image';
+import { getOrderNumber } from '@/lib/utils';
 
 function SuccessContent() {
   const router = useRouter();
   const params = useSearchParams();
-  const orderNumber = params.get('orderNumber') || '-';
+  const orderNumber = getOrderNumber(params.get('orderId') || undefined);
   const table = params.get('table') || '-';
 
   return (

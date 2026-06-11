@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import { DollarSign, ShoppingBag, Package, Users } from 'lucide-react';
-import { formatRupiah, formatDateTime, getStatusLabel, getStatusColor } from '@/lib/utils';
+import { formatRupiah, formatDateTime, getStatusLabel, getStatusColor, getOrderNumber } from '@/lib/utils';
 import api from '@/lib/api';
 import type { Order } from '@/types';
 
@@ -37,9 +37,9 @@ export default function AdminDashboard() {
     api.members.getAll().then(m => setMemberCount(m.length)).catch(() => setMemberCount(0));
   }, []);
 
-  const totalRevenue = orders.filter(o => o.status === 'confirmed').reduce((s, o) => s + o.total, 0);
+  const totalRevenue = orders.filter(o => o.status === 'confirmed').reduce((s, o) => s + Number(o.grandTotal), 0);
   const totalOrders = orders.length;
-  const totalItems = orders.reduce((s, o) => s + (o.items?.length || 0), 0);
+  const totalItems = orders.reduce((s, o) => s + (o.orderItems?.length || 0), 0);
   const recentOrders = orders.slice(0, 10);
 
   return (
@@ -80,8 +80,8 @@ export default function AdminDashboard() {
               <tbody>
                 {recentOrders.map((o) => (
                   <tr key={o.id} className="border-t border-oat-milk hover:bg-vanilla-mist/50">
-                    <td className="px-4 py-3 font-mono font-bold text-primary">{o.orderNumber}</td>
-                    <td className="px-4 py-3 font-mono">{formatRupiah(o.total)}</td>
+                    <td className="px-4 py-3 font-mono font-bold text-primary">{getOrderNumber(o.id)}</td>
+                    <td className="px-4 py-3 font-mono">{formatRupiah(o.grandTotal)}</td>
                     <td className="px-4 py-3"><span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(o.status)}`}>{getStatusLabel(o.status)}</span></td>
                     <td className="px-4 py-3 text-on-surface-variant hidden md:table-cell">{formatDateTime(o.createdAt)}</td>
                   </tr>

@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
-import { formatRupiah, formatDateTime, getPaymentMethodLabel } from '@/lib/utils';
+import { formatRupiah, formatDateTime, getPaymentMethodLabel, getOrderNumber } from '@/lib/utils';
 import type { Payment } from '@/types';
 
 export default function AdminPaymentsPage() {
@@ -33,7 +33,7 @@ export default function AdminPaymentsPage() {
               <tbody>
                 {payments.map(p => (
                   <tr key={p.id} className="border-t border-oat-milk hover:bg-vanilla-mist/50">
-                    <td className="px-4 py-3 font-mono font-bold text-primary">{p.order?.orderNumber || p.orderId.slice(0, 8)}</td>
+                    <td className="px-4 py-3 font-mono font-bold text-primary">{getOrderNumber(p.orderId)}</td>
                     <td className="px-4 py-3">{getPaymentMethodLabel(p.method)}</td>
                     <td className="px-4 py-3 font-mono">{formatRupiah(p.amount)}</td>
                     <td className="px-4 py-3"><span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${p.status === 'paid' ? 'bg-success-green/15 text-success-green' : 'bg-warning-amber/15 text-warning-amber'}`}>{p.status}</span></td>

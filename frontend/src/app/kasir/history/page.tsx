@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from 'react';
 import api from '@/lib/api';
-import { formatRupiah, formatDateTime, getStatusLabel, getStatusColor } from '@/lib/utils';
+import { formatRupiah, formatDateTime, getStatusLabel, getStatusColor, getOrderNumber } from '@/lib/utils';
 import type { Order } from '@/types';
 
 export default function KasirHistoryPage() {
@@ -39,9 +39,9 @@ export default function KasirHistoryPage() {
             <tbody>
               {confirmed.map((o) => (
                 <tr key={o.id} className="border-t border-oat-milk hover:bg-vanilla-mist/50 transition-colors">
-                  <td className="px-4 py-3 font-mono font-bold text-primary">{o.orderNumber}</td>
-                  <td className="px-4 py-3 hidden md:table-cell">{o.table?.number || '-'}</td>
-                  <td className="px-4 py-3 font-mono">{formatRupiah(o.total)}</td>
+                  <td className="px-4 py-3 font-mono font-bold text-primary">{getOrderNumber(o.id)}</td>
+                  <td className="px-4 py-3 hidden md:table-cell">{o.table?.tableNumber ?? '-'}</td>
+                  <td className="px-4 py-3 font-mono">{formatRupiah(o.grandTotal)}</td>
                   <td className="px-4 py-3">
                     <span className={`px-2 py-0.5 rounded-full text-xs font-semibold ${getStatusColor(o.status)}`}>{getStatusLabel(o.status)}</span>
                   </td>

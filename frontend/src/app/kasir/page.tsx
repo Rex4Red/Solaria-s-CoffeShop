@@ -3,7 +3,7 @@
 import { useState, useEffect } from 'react';
 import { Check, X, Clock, RefreshCw } from 'lucide-react';
 import api from '@/lib/api';
-import { formatRupiah, formatRelativeTime, getStatusLabel, cn } from '@/lib/utils';
+import { formatRupiah, formatRelativeTime, getStatusLabel, getOrderNumber, cn } from '@/lib/utils';
 import type { Order } from '@/types';
 import toast from 'react-hot-toast';
 
@@ -56,7 +56,7 @@ export default function KasirPage() {
             <div key={order.id} className="bg-surface-bright border border-oat-milk rounded-xl p-4 shadow-sm animate-fade-in">
               <div className="flex justify-between items-start mb-3">
                 <div>
-                  <p className="font-mono font-bold text-sm text-primary">{order.orderNumber}</p>
+                  <p className="font-mono font-bold text-sm text-primary">{getOrderNumber(order.id)}</p>
                   <p className="text-xs text-on-surface-variant">{formatRelativeTime(order.createdAt)}</p>
                 </div>
                 <span className="px-2.5 py-1 rounded-full bg-warning-amber/15 text-warning-amber text-xs font-semibold">
@@ -65,19 +65,19 @@ export default function KasirPage() {
               </div>
               {order.table && (
                 <div className="text-xs text-on-surface-variant mb-3 flex items-center gap-1">
-                  🪑 Meja {order.table.number}
+                  🪑 Meja {order.table.tableNumber}
                 </div>
               )}
               <div className="space-y-1 mb-4">
-                {order.items?.map((item) => (
+                {order.orderItems?.map((item) => (
                   <div key={item.id} className="flex justify-between text-sm">
-                    <span>{item.menuItem?.name || 'Item'} x{item.quantity}</span>
-                    <span className="font-mono text-xs">{formatRupiah(item.price * item.quantity)}</span>
+                    <span>{item.menuItem?.name || 'Item'} x{item.qty}</span>
+                    <span className="font-mono text-xs">{formatRupiah(Number(item.unitPrice) * item.qty)}</span>
                   </div>
                 ))}
               </div>
               <div className="border-t border-oat-milk pt-3 flex justify-between items-center">
-                <span className="font-mono font-bold text-primary">{formatRupiah(order.total)}</span>
+                <span className="font-mono font-bold text-primary">{formatRupiah(order.grandTotal)}</span>
                 <div className="flex gap-2">
                   <button onClick={() => handleCancel(order.id)} className="px-4 py-2 rounded-lg border border-error-rose text-error-rose text-sm font-medium hover:bg-error-rose/5 active:scale-95 transition-all flex items-center gap-1.5">
                     <X size={14} />Tolak

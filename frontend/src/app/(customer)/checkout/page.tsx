@@ -37,7 +37,7 @@ export default function CheckoutPage() {
       });
       await api.payments.simulate({ orderId: order.id, method: selectedMethod });
       clearCart();
-      router.push(`/order-success?orderNumber=${order.orderNumber}&table=${tableNumber}`);
+      router.push(`/order-success?orderId=${order.id}&table=${tableNumber}`);
       toast.success('Pesanan berhasil!');
     } catch { toast.error('Gagal membuat pesanan'); } finally { setLoading(false); }
   };

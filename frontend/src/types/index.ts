@@ -55,26 +55,28 @@ export type PaymentMethod =
 export interface OrderItem {
   id: string;
   menuItemId: string;
-  menuItem?: MenuItem;
-  quantity: number;
-  price: number;
+  menuItem?: { id: string; name: string; imageUrl?: string; price?: number };
+  qty: number;
+  unitPrice: number;
+  discountAmount: number;
   notes?: string;
 }
 
 export interface Order {
   id: string;
-  orderNumber: string;
   tableId: string;
-  table?: Table;
+  table?: { tableNumber: number };
   memberId?: string;
+  member?: { id: string; name: string };
   status: OrderStatus;
-  items: OrderItem[];
+  orderItems: OrderItem[];
   subtotal: number;
-  discount: number;
-  total: number;
+  discountTotal: number;
+  grandTotal: number;
   notes?: string;
   createdAt: string;
-  updatedAt: string;
+  confirmedAt?: string;
+  payments?: { id: string; method: PaymentMethod; status: PaymentStatus }[];
 }
 
 export interface Payment {

@@ -5,13 +5,23 @@
 /**
  * Format number as Indonesian Rupiah
  */
-export function formatRupiah(amount: number): string {
+export function formatRupiah(amount: number | string): string {
+  const value = typeof amount === 'string' ? parseFloat(amount) : amount;
+  const safe = Number.isFinite(value) ? value : 0;
   return new Intl.NumberFormat('id-ID', {
     style: 'currency',
     currency: 'IDR',
     minimumFractionDigits: 0,
     maximumFractionDigits: 0,
-  }).format(amount);
+  }).format(safe);
+}
+
+/**
+ * Build a short, human-friendly order number from a UUID
+ */
+export function getOrderNumber(id?: string): string {
+  if (!id) return '-';
+  return `#${id.slice(0, 8).toUpperCase()}`;
 }
 
 /**
