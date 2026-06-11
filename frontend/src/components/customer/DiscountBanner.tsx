@@ -72,7 +72,7 @@ export default function DiscountBanner() {
                   Login / daftar member dulu supaya harganya otomatis terpotong.
                 </p>
                 <button
-                  onClick={() => router.push('/login')}
+                  onClick={() => router.push('/member')}
                   className="shrink-0 inline-flex items-center gap-1.5 bg-on-primary text-primary font-semibold text-xs px-3 py-1.5 rounded-lg active:scale-95 transition-transform"
                 >
                   <UserPlus size={13} />
