@@ -35,15 +35,18 @@ export const useCartStore = create<CartState>()(
 
       addItem: (menuItem) => {
         const existing = get().items.find((item) => item.menuItem.id === menuItem.id);
+        const maxStock = menuItem.stock ?? Infinity;
         if (existing) {
+          if (existing.quantity >= maxStock) return; // sudah mencapai batas stok
           set({
             items: get().items.map((item) =>
               item.menuItem.id === menuItem.id
-                ? { ...item, quantity: item.quantity + 1 }
+                ? { ...item, quantity: Math.min(item.quantity + 1, maxStock) }
                 : item
             ),
           });
         } else {
+          if (maxStock <= 0) return;
           set({ items: [...get().items, { menuItem, quantity: 1 }] });
         }
       },
@@ -58,9 +61,11 @@ export const useCartStore = create<CartState>()(
           return;
         }
         set({
-          items: get().items.map((item) =>
-            item.menuItem.id === menuItemId ? { ...item, quantity } : item
-          ),
+          items: get().items.map((item) => {
+            if (item.menuItem.id !== menuItemId) return item;
+            const maxStock = item.menuItem.stock ?? Infinity;
+            return { ...item, quantity: Math.min(quantity, maxStock) };
+          }),
         });
       },
 

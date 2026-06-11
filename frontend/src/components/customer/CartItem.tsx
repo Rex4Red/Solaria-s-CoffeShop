@@ -75,7 +75,8 @@ export default function CartItem({ item }: CartItemProps) {
             </span>
             <button
               onClick={() => updateQuantity(item.menuItem.id, item.quantity + 1)}
-              className="w-7 h-7 rounded-full flex items-center justify-center text-primary hover:bg-oat-milk active:scale-90 transition-all"
+              disabled={item.quantity >= item.menuItem.stock}
+              className="w-7 h-7 rounded-full flex items-center justify-center text-primary hover:bg-oat-milk active:scale-90 transition-all disabled:opacity-30 disabled:cursor-not-allowed"
             >
               <Plus size={14} />
             </button>

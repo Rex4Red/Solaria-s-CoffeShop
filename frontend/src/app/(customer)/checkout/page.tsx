@@ -39,7 +39,10 @@ export default function CheckoutPage() {
       clearCart();
       router.push(`/order-success?orderId=${order.id}&table=${tableNumber}`);
       toast.success('Pesanan berhasil!');
-    } catch { toast.error('Gagal membuat pesanan'); } finally { setLoading(false); }
+    } catch (err) {
+      const msg = err instanceof Error && err.message ? err.message : 'Gagal membuat pesanan';
+      toast.error(msg);
+    } finally { setLoading(false); }
   };
 
   return (

@@ -27,6 +27,16 @@ export class OrdersService {
       throw new BadRequestException('One or more menu items are unavailable or not found');
     }
 
+    // 2b. Validasi stok cukup untuk tiap item
+    for (const orderItem of dto.items) {
+      const menuItem = menuItems.find((m) => m.id === orderItem.menuItemId)!;
+      if (orderItem.qty > menuItem.stock) {
+        throw new BadRequestException(
+          `Stok ${menuItem.name} tidak cukup. Tersisa ${menuItem.stock}.`,
+        );
+      }
+    }
+
     // 3. Check active discounts for member
     let discountMap = new Map<string, { type: string; value: Prisma.Decimal }>();
     if (dto.memberId) {

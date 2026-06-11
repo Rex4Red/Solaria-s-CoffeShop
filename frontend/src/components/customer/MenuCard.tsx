@@ -13,10 +13,15 @@ interface MenuCardProps {
 
 export default function MenuCard({ item }: MenuCardProps) {
   const addItem = useCartStore((s) => s.addItem);
+  const inCartQty = useCartStore((s) => s.items.find((i) => i.menuItem.id === item.id)?.quantity ?? 0);
 
   const handleAdd = () => {
     if (!item.isAvailable || item.stock <= 0) {
       toast.error('Item sedang tidak tersedia');
+      return;
+    }
+    if (inCartQty >= item.stock) {
+      toast.error(`Stok ${item.name} tinggal ${item.stock}`);
       return;
     }
     addItem(item);
