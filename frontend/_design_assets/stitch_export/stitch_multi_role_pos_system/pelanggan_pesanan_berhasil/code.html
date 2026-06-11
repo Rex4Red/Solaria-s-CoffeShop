@@ -1,0 +1,181 @@
+<!DOCTYPE html>
+
+<html lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Order Success - Espresso &amp; Co.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f2f0ed",
+                        "tertiary-container": "#226036",
+                        "surface-container": "#efeeea",
+                        "warning-amber": "#D4A04A",
+                        "oat-milk": "#EDE6D8",
+                        "on-error-container": "#93000a",
+                        "slate-admin": "#4A4A52",
+                        "inverse-primary": "#e5bfa9",
+                        "secondary-fixed": "#ffdcc2",
+                        "primary-fixed": "#ffdbc8",
+                        "error-rose": "#C07070",
+                        "error": "#ba1a1a",
+                        "soft-lavender": "#8E8BA8",
+                        "on-primary-container": "#e8c2ad",
+                        "surface-bright": "#fbf9f5",
+                        "on-secondary-fixed-variant": "#643e1c",
+                        "surface": "#fbf9f5",
+                        "on-background": "#1b1c1a",
+                        "inverse-surface": "#30312e",
+                        "surface-variant": "#e4e2de",
+                        "tertiary-fixed": "#b0f2bb",
+                        "info-blue": "#7A9BB5",
+                        "on-tertiary-fixed": "#00210c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#105229",
+                        "surface-dim": "#dbdad6",
+                        "outline": "#81746e",
+                        "on-error": "#ffffff",
+                        "secondary": "#7f5531",
+                        "latte-beige": "#F5F0E8",
+                        "background": "#fbf9f5",
+                        "on-secondary-fixed": "#2e1500",
+                        "secondary-container": "#ffc69a",
+                        "mocha-dark": "#3D2B1F",
+                        "tertiary-fixed-dim": "#95d5a1",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#4f453f",
+                        "secondary-fixed-dim": "#f3bb90",
+                        "surface-tint": "#755847",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1c1a",
+                        "outline-variant": "#d3c3bb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#2b1709",
+                        "surface-container-high": "#eae8e4",
+                        "vanilla-mist": "#FAF8F4",
+                        "surface-container-low": "#f5f3ef",
+                        "success-green": "#5D9B6B",
+                        "on-tertiary-container": "#98d8a3",
+                        "on-primary-fixed-variant": "#5b4131",
+                        "tertiary": "#014821",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e4e2de",
+                        "primary-fixed-dim": "#e5bfa9",
+                        "primary": "#523829",
+                        "primary-container": "#6b4f3e",
+                        "on-secondary-container": "#7a512d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "price-display": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "headline-h1-mobile": ["Plus Jakarta Sans"],
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-h1": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "display-hero": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "headline-h3": ["Plus Jakarta Sans"],
+                        "headline-h2": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "price-display": ["20px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "caption": ["12px", { "lineHeight": "1.5", "fontWeight": "500" }],
+                        "headline-h1-mobile": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "headline-h1": ["28px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-hero": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-h3": ["18px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-h2": ["22px", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        .animate-bounce-in {
+            animation: bounceIn 0.8s cubic-bezier(0.68, -0.55, 0.265, 1.55) forwards;
+        }
+        @keyframes bounceIn {
+            0% { transform: scale(0); opacity: 0; }
+            50% { transform: scale(1.1); opacity: 1; }
+            100% { transform: scale(1); opacity: 1; }
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="bg-background text-on-background min-h-screen flex flex-col antialiased">
+<!-- TopNavBar Suppressed: Transactional End Screen -->
+<main class="flex-grow flex flex-col items-center justify-center p-margin-mobile md:p-margin-desktop">
+<div class="max-w-md w-full bg-surface-container-lowest rounded-xl border border-oat-milk p-xl shadow-[0_4px_12px_rgba(61,43,31,0.08)] text-center flex flex-col items-center gap-lg">
+<!-- Checkmark Animation Container -->
+<div class="w-24 h-24 rounded-full bg-success-green/15 flex items-center justify-center animate-bounce-in mb-sm">
+<span class="material-symbols-outlined text-success-green" style="font-size: 48px; font-variation-settings: 'FILL' 1;">
+                    check_circle
+                </span>
+</div>
+<!-- Success Message -->
+<div class="flex flex-col gap-xs">
+<h1 class="font-headline-h1-mobile md:font-headline-h1 text-headline-h1-mobile md:text-headline-h1 text-primary">
+                    Pesanan Berhasil!
+                </h1>
+<p class="font-body-md text-body-md text-on-surface-variant">
+                    Terima kasih telah memesan. Silakan duduk dan nikmati momen Anda.
+                </p>
+</div>
+<!-- Order Details -->
+<div class="w-full bg-vanilla-mist rounded-lg border border-oat-milk p-md flex flex-col gap-md">
+<div class="flex justify-between items-center border-b border-oat-milk pb-sm">
+<span class="font-caption text-caption text-on-surface-variant">Nomor Pesanan</span>
+<span class="font-label-mono text-label-mono text-mocha-dark font-bold">#ORD-9824A</span>
+</div>
+<div class="flex justify-between items-center">
+<span class="font-caption text-caption text-on-surface-variant">Nomor Meja</span>
+<div class="bg-latte-beige text-primary-container px-sm py-xs rounded font-price-display text-price-display">
+                        12
+                    </div>
+</div>
+</div>
+<!-- Action Buttons -->
+<div class="w-full flex flex-col gap-sm mt-md">
+<button class="w-full bg-primary-container text-on-primary rounded-lg py-sm px-md font-body-md text-body-md font-medium hover:bg-primary transition-colors active:scale-95 duration-150">
+                    Pesan Lagi
+                </button>
+<button class="w-full bg-transparent text-primary rounded-lg py-sm px-md font-body-md text-body-md font-medium border border-primary hover:bg-latte-beige transition-colors active:scale-95 duration-150">
+                    Lihat Struk
+                </button>
+</div>
+</div>
+</main>
+<!-- BottomNavBar Suppressed: Transactional End Screen -->
+</body></html>

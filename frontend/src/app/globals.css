@@ -1,0 +1,178 @@
+@import url('https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@400;500;600;700&family=Inter:wght@400;500;600&family=JetBrains+Mono:wght@500;700&display=swap');
+@import "tailwindcss";
+
+@theme {
+  /* ═══════════════════════════════════════════ */
+  /*  Solaria's CoffeeShop Design Tokens        */
+  /*  Based on Stitch Export                     */
+  /* ═══════════════════════════════════════════ */
+
+  /* ── Core Palette ── */
+  --color-primary: #523829;
+  --color-primary-container: #6b4f3e;
+  --color-on-primary: #ffffff;
+  --color-on-primary-container: #e8c2ad;
+
+  --color-secondary: #7f5531;
+  --color-secondary-container: #ffc69a;
+  --color-on-secondary: #ffffff;
+  --color-on-secondary-container: #7a512d;
+
+  --color-tertiary: #014821;
+  --color-tertiary-container: #226036;
+  --color-on-tertiary: #ffffff;
+  --color-on-tertiary-container: #98d8a3;
+
+  /* ── Surface / Background ── */
+  --color-surface: #fbf9f5;
+  --color-surface-bright: #fbf9f5;
+  --color-surface-dim: #dbdad6;
+  --color-surface-container: #efeeea;
+  --color-surface-container-low: #f5f3ef;
+  --color-surface-container-high: #eae8e4;
+  --color-surface-container-highest: #e4e2de;
+  --color-surface-container-lowest: #ffffff;
+  --color-surface-variant: #e4e2de;
+  --color-surface-tint: #755847;
+  --color-background: #fbf9f5;
+  --color-on-surface: #1b1c1a;
+  --color-on-surface-variant: #4f453f;
+  --color-on-background: #1b1c1a;
+
+  /* ── Custom Coffee Palette ── */
+  --color-mocha-dark: #3D2B1F;
+  --color-latte-beige: #F5F0E8;
+  --color-oat-milk: #EDE6D8;
+  --color-vanilla-mist: #FAF8F4;
+
+  /* ── Status Colors ── */
+  --color-success-green: #5D9B6B;
+  --color-warning-amber: #D4A04A;
+  --color-error-rose: #C07070;
+  --color-info-blue: #7A9BB5;
+  --color-error: #ba1a1a;
+  --color-error-container: #ffdad6;
+  --color-on-error: #ffffff;
+  --color-on-error-container: #93000a;
+
+  /* ── Outline ── */
+  --color-outline: #81746e;
+  --color-outline-variant: #d3c3bb;
+
+  /* ── Inverse ── */
+  --color-inverse-surface: #30312e;
+  --color-inverse-on-surface: #f2f0ed;
+  --color-inverse-primary: #e5bfa9;
+
+  /* ── Admin ── */
+  --color-slate-admin: #4A4A52;
+  --color-soft-lavender: #8E8BA8;
+
+  /* ── Fonts ── */
+  --font-sans: 'Plus Jakarta Sans', system-ui, -apple-system, sans-serif;
+  --font-body: 'Inter', system-ui, -apple-system, sans-serif;
+  --font-mono: 'JetBrains Mono', ui-monospace, monospace;
+
+  /* ── Custom Spacing (use gap-coffee-* to avoid Tailwind conflicts) ── */
+  --spacing-coffee-xs: 4px;
+  --spacing-coffee-sm: 8px;
+  --spacing-coffee-md: 16px;
+  --spacing-coffee-lg: 24px;
+  --spacing-coffee-xl: 32px;
+  --spacing-coffee-2xl: 48px;
+}
+
+/* ═══════════════════════════════════════════ */
+/*  Base Styles                               */
+/* ═══════════════════════════════════════════ */
+
+html {
+  scroll-behavior: smooth;
+  -webkit-font-smoothing: antialiased;
+  -moz-osx-font-smoothing: grayscale;
+}
+
+body {
+  font-family: var(--font-body);
+  background-color: var(--color-surface);
+  color: var(--color-on-surface);
+}
+
+/* ═══════════════════════════════════════════ */
+/*  Scrollbar                                 */
+/* ═══════════════════════════════════════════ */
+
+::-webkit-scrollbar {
+  width: 4px;
+  height: 4px;
+}
+
+::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+::-webkit-scrollbar-thumb {
+  background: var(--color-surface-variant);
+  border-radius: 4px;
+}
+
+::-webkit-scrollbar-thumb:hover {
+  background: var(--color-outline-variant);
+}
+
+/* ═══════════════════════════════════════════ */
+/*  Utilities                                 */
+/* ═══════════════════════════════════════════ */
+
+.gradient-bg {
+  background: linear-gradient(135deg, #FDFBF7 0%, #F5F0E8 100%);
+}
+
+.hide-scrollbar {
+  -ms-overflow-style: none;
+  scrollbar-width: none;
+}
+
+.hide-scrollbar::-webkit-scrollbar {
+  display: none;
+}
+
+.safe-bottom-padding {
+  padding-bottom: calc(80px + env(safe-area-inset-bottom, 20px));
+}
+
+/* ═══════════════════════════════════════════ */
+/*  Animations                                */
+/* ═══════════════════════════════════════════ */
+
+@keyframes fadeIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes slideUp {
+  from { opacity: 0; transform: translateY(20px); }
+  to { opacity: 1; transform: translateY(0); }
+}
+
+@keyframes scaleIn {
+  from { opacity: 0; transform: scale(0.95); }
+  to { opacity: 1; transform: scale(1); }
+}
+
+@keyframes pulse-soft {
+  0%, 100% { opacity: 1; }
+  50% { opacity: 0.7; }
+}
+
+.animate-fade-in {
+  animation: fadeIn 0.4s ease-out forwards;
+}
+
+.animate-slide-up {
+  animation: slideUp 0.5s ease-out forwards;
+}
+
+.animate-scale-in {
+  animation: scaleIn 0.3s ease-out forwards;
+}

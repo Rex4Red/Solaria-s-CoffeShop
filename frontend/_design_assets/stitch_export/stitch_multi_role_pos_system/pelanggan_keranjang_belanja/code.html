@@ -1,0 +1,324 @@
+<!DOCTYPE html>
+
+<html class="light" lang="id"><head>
+<meta charset="utf-8"/>
+<meta content="width=device-width, initial-scale=1.0" name="viewport"/>
+<title>Keranjang - Espresso &amp; Co.</title>
+<script src="https://cdn.tailwindcss.com?plugins=forms,container-queries"></script>
+<link href="https://fonts.googleapis.com/css2?family=Plus+Jakarta+Sans:wght@600;700&amp;family=Inter:wght@400;500&amp;family=JetBrains+Mono:wght@500;700&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<link href="https://fonts.googleapis.com/css2?family=Material+Symbols+Outlined:wght,FILL@100..700,0..1&amp;display=swap" rel="stylesheet"/>
+<script id="tailwind-config">
+        tailwind.config = {
+            darkMode: "class",
+            theme: {
+                extend: {
+                    "colors": {
+                        "inverse-on-surface": "#f2f0ed",
+                        "tertiary-container": "#226036",
+                        "surface-container": "#efeeea",
+                        "warning-amber": "#D4A04A",
+                        "oat-milk": "#EDE6D8",
+                        "on-error-container": "#93000a",
+                        "slate-admin": "#4A4A52",
+                        "inverse-primary": "#e5bfa9",
+                        "secondary-fixed": "#ffdcc2",
+                        "primary-fixed": "#ffdbc8",
+                        "error-rose": "#C07070",
+                        "error": "#ba1a1a",
+                        "soft-lavender": "#8E8BA8",
+                        "on-primary-container": "#e8c2ad",
+                        "surface-bright": "#fbf9f5",
+                        "on-secondary-fixed-variant": "#643e1c",
+                        "surface": "#fbf9f5",
+                        "on-background": "#1b1c1a",
+                        "inverse-surface": "#30312e",
+                        "surface-variant": "#e4e2de",
+                        "tertiary-fixed": "#b0f2bb",
+                        "info-blue": "#7A9BB5",
+                        "on-tertiary-fixed": "#00210c",
+                        "surface-container-lowest": "#ffffff",
+                        "on-tertiary-fixed-variant": "#105229",
+                        "surface-dim": "#dbdad6",
+                        "outline": "#81746e",
+                        "on-error": "#ffffff",
+                        "secondary": "#7f5531",
+                        "latte-beige": "#F5F0E8",
+                        "background": "#fbf9f5",
+                        "on-secondary-fixed": "#2e1500",
+                        "secondary-container": "#ffc69a",
+                        "mocha-dark": "#3D2B1F",
+                        "tertiary-fixed-dim": "#95d5a1",
+                        "on-primary": "#ffffff",
+                        "on-surface-variant": "#4f453f",
+                        "secondary-fixed-dim": "#f3bb90",
+                        "surface-tint": "#755847",
+                        "error-container": "#ffdad6",
+                        "on-surface": "#1b1c1a",
+                        "outline-variant": "#d3c3bb",
+                        "on-tertiary": "#ffffff",
+                        "on-primary-fixed": "#2b1709",
+                        "surface-container-high": "#eae8e4",
+                        "vanilla-mist": "#FAF8F4",
+                        "surface-container-low": "#f5f3ef",
+                        "success-green": "#5D9B6B",
+                        "on-tertiary-container": "#98d8a3",
+                        "on-primary-fixed-variant": "#5b4131",
+                        "tertiary": "#014821",
+                        "on-secondary": "#ffffff",
+                        "surface-container-highest": "#e4e2de",
+                        "primary-fixed-dim": "#e5bfa9",
+                        "primary": "#523829",
+                        "primary-container": "#6b4f3e",
+                        "on-secondary-container": "#7a512d"
+                    },
+                    "borderRadius": {
+                        "DEFAULT": "0.25rem",
+                        "lg": "0.5rem",
+                        "xl": "0.75rem",
+                        "full": "9999px"
+                    },
+                    "spacing": {
+                        "2xl": "48px",
+                        "xl": "32px",
+                        "md": "16px",
+                        "base": "4px",
+                        "gutter": "16px",
+                        "margin-desktop": "32px",
+                        "lg": "24px",
+                        "xs": "4px",
+                        "margin-mobile": "16px",
+                        "sm": "8px"
+                    },
+                    "fontFamily": {
+                        "price-display": ["JetBrains Mono"],
+                        "caption": ["Inter"],
+                        "headline-h1-mobile": ["Plus Jakarta Sans"],
+                        "label-mono": ["JetBrains Mono"],
+                        "headline-h1": ["Plus Jakarta Sans"],
+                        "body-md": ["Inter"],
+                        "display-hero": ["Plus Jakarta Sans"],
+                        "body-lg": ["Inter"],
+                        "headline-h3": ["Plus Jakarta Sans"],
+                        "headline-h2": ["Plus Jakarta Sans"]
+                    },
+                    "fontSize": {
+                        "price-display": ["20px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "caption": ["12px", { "lineHeight": "1.5", "fontWeight": "500" }],
+                        "headline-h1-mobile": ["24px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "label-mono": ["12px", { "lineHeight": "1.0", "fontWeight": "500" }],
+                        "headline-h1": ["28px", { "lineHeight": "1.3", "fontWeight": "700" }],
+                        "body-md": ["14px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "display-hero": ["36px", { "lineHeight": "1.2", "fontWeight": "700" }],
+                        "body-lg": ["16px", { "lineHeight": "1.6", "fontWeight": "400" }],
+                        "headline-h3": ["18px", { "lineHeight": "1.4", "fontWeight": "600" }],
+                        "headline-h2": ["22px", { "lineHeight": "1.3", "fontWeight": "600" }]
+                    }
+                }
+            }
+        }
+    </script>
+<style>
+        body {
+            background-color: theme('colors.surface');
+            color: theme('colors.on-surface');
+        }
+        .material-symbols-outlined {
+            font-variation-settings: 'FILL' 0, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        .material-symbols-outlined.fill {
+            font-variation-settings: 'FILL' 1, 'wght' 400, 'GRAD' 0, 'opsz' 24;
+        }
+        
+        /* Custom scrollbar for webkit */
+        ::-webkit-scrollbar {
+            width: 6px;
+        }
+        ::-webkit-scrollbar-track {
+            background: transparent;
+        }
+        ::-webkit-scrollbar-thumb {
+            background-color: theme('colors.surface-variant');
+            border-radius: 20px;
+        }
+    </style>
+<style>
+    body {
+      min-height: max(884px, 100dvh);
+    }
+  </style>
+  </head>
+<body class="antialiased flex flex-col min-h-screen">
+<!-- Top Navigation (Web) -->
+<header class="hidden md:flex w-full top-0 sticky bg-surface/80 backdrop-blur-md shadow-[0_1px_3px_rgba(61,43,31,0.06)] z-50">
+<div class="flex justify-between items-center px-margin-desktop py-md w-full max-w-[1200px] mx-auto">
+<div class="font-headline-h2 text-headline-h2 text-primary">Espresso &amp; Co.</div>
+<nav class="flex gap-lg">
+<a class="text-on-surface-variant font-medium hover:text-secondary-container transition-colors active:scale-95 duration-150" href="#">Home</a>
+<a class="text-on-surface-variant font-medium hover:text-secondary-container transition-colors active:scale-95 duration-150" href="#">Menu</a>
+<a class="text-primary font-semibold border-b-2 border-primary pb-1 active:scale-95 duration-150" href="#">Cart</a>
+</nav>
+<div class="flex gap-md text-primary">
+<button class="hover:text-secondary-container transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="shopping_cart">shopping_cart</span>
+</button>
+<button class="hover:text-secondary-container transition-colors active:scale-95 duration-150">
+<span class="material-symbols-outlined" data-icon="account_circle">account_circle</span>
+</button>
+</div>
+</div>
+</header>
+<!-- Top Navigation (Mobile) -->
+<header class="md:hidden w-full top-0 sticky bg-surface/80 backdrop-blur-md z-50 px-margin-mobile py-md flex justify-between items-center border-b border-surface-variant">
+<div class="font-headline-h2 text-headline-h2 text-primary">Keranjang</div>
+<button class="text-primary active:scale-95 transition-transform">
+<span class="material-symbols-outlined" data-icon="more_vert">more_vert</span>
+</button>
+</header>
+<!-- Main Content -->
+<main class="flex-1 w-full max-w-[1200px] mx-auto px-margin-mobile md:px-margin-desktop py-lg md:py-xl pb-[100px] md:pb-xl flex flex-col md:flex-row gap-xl">
+<!-- Cart Items Section -->
+<section class="flex-1 flex flex-col gap-md">
+<h1 class="hidden md:block font-headline-h1 text-headline-h1 text-primary mb-sm">Keranjang Anda</h1>
+<!-- Item 1 -->
+<div class="flex gap-md p-md bg-surface-container-lowest rounded-xl border border-oat-milk shadow-[0_1px_3px_rgba(61,43,31,0.06)] hover:shadow-[0_4px_12px_rgba(61,43,31,0.08)] transition-shadow">
+<img alt="Iced Caramel Macchiato" class="w-24 h-24 object-cover rounded-lg" data-alt="A close-up, high-quality photograph of a tall glass of iced caramel macchiato resting on a light wooden table. Condensation drips down the sides of the glass, highlighting the rich layers of espresso, creamy milk, and decadent caramel drizzle. The background is slightly blurred, showing a bright, airy, modern cafe setting with soft natural light pouring in. The overall mood is refreshing and appetizing, perfectly fitting a warm, minimalist corporate design style." src="https://lh3.googleusercontent.com/aida-public/AB6AXuBefBM2SngK3YN4pqeqY_bRNq77oudJj1pyt1OX2_SY0xVN_YU4CFQ5fDaiXqGH85FCvZyWEjQb7Hn4Zfr_Dx2URTQ1Zh-L-kqXoRk4msa9mW3KQdg9cSDZ6P-L7ZssxHVz_EDm2UlS9va6jHBmYS2p4qGTIKCEbsB_Zpuw9Vc93cbZqBw_yPChc__66iM5CMTcl5-sKi14Layohaj7aenCs6twJty2aT8fCimZBSC4n9JzbCsmt8zsgoEQxSsj0LVWHbGz2JJsCsI"/>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-h3 text-headline-h3 text-primary">Iced Caramel Macchiato</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Grande, Oat Milk</p>
+</div>
+<button class="text-outline hover:text-error transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex justify-between items-center mt-sm">
+<span class="font-price-display text-price-display text-primary">Rp 55.000</span>
+<div class="flex items-center gap-sm bg-vanilla-mist border border-oat-milk rounded-full px-sm py-xs">
+<button class="text-primary hover:text-primary-container active:scale-95 flex items-center justify-center w-6 h-6">
+<span class="material-symbols-outlined text-[18px]" data-icon="remove">remove</span>
+</button>
+<span class="font-body-md text-body-md text-primary w-4 text-center">1</span>
+<button class="text-primary hover:text-primary-container active:scale-95 flex items-center justify-center w-6 h-6">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<!-- Item 2 -->
+<div class="flex gap-md p-md bg-surface-container-lowest rounded-xl border border-oat-milk shadow-[0_1px_3px_rgba(61,43,31,0.06)] hover:shadow-[0_4px_12px_rgba(61,43,31,0.08)] transition-shadow">
+<img alt="Butter Croissant" class="w-24 h-24 object-cover rounded-lg" data-alt="A top-down view of a freshly baked, golden-brown butter croissant placed on a simple white ceramic plate. The flaky texture of the pastry is beautifully captured, with a few crumbs scattered on the plate. The lighting is soft and diffused, emphasizing the warm, inviting tones of the pastry against the clean, light background. This imagery supports a minimalist, elegant brand aesthetic focused on tactile warmth and quality." src="https://lh3.googleusercontent.com/aida-public/AB6AXuCm8ygjN-WBRyuS-QwXFINOTbVBYTMF4lLlT0WSkHLGxac9GebibDpUeyw9cXZuNRJN6FQ6BtgD79QHXAyBwDQjMHO6HGLvQW8hw4B-ftGKszgysL5H2RCpCNNF85r_JifAEtUhdP6yyxQNGUk398dpNcJ-xIxWTWvZIX6kXcN9MfZogNAQ8GOnu2uusN2PdN9Ej1NiI4ojdPNSyTrsvoh2Y1aOl-i7Q35K1f5UQEzh4_DGw-Zl664HzQsHKVoSftdiQdguTuSxYms"/>
+<div class="flex-1 flex flex-col justify-between">
+<div class="flex justify-between items-start">
+<div>
+<h3 class="font-headline-h3 text-headline-h3 text-primary">Butter Croissant</h3>
+<p class="font-body-md text-body-md text-on-surface-variant mt-xs">Warmed</p>
+</div>
+<button class="text-outline hover:text-error transition-colors active:scale-95">
+<span class="material-symbols-outlined" data-icon="delete">delete</span>
+</button>
+</div>
+<div class="flex justify-between items-center mt-sm">
+<span class="font-price-display text-price-display text-primary">Rp 30.000</span>
+<div class="flex items-center gap-sm bg-vanilla-mist border border-oat-milk rounded-full px-sm py-xs">
+<button class="text-primary hover:text-primary-container active:scale-95 flex items-center justify-center w-6 h-6">
+<span class="material-symbols-outlined text-[18px]" data-icon="remove">remove</span>
+</button>
+<span class="font-body-md text-body-md text-primary w-4 text-center">2</span>
+<button class="text-primary hover:text-primary-container active:scale-95 flex items-center justify-center w-6 h-6">
+<span class="material-symbols-outlined text-[18px]" data-icon="add">add</span>
+</button>
+</div>
+</div>
+</div>
+</div>
+<button class="flex items-center justify-center gap-sm mt-md py-sm text-secondary font-body-md text-body-md hover:bg-latte-beige rounded-lg transition-colors border border-dashed border-outline-variant w-full md:w-max px-lg mx-auto md:mx-0">
+<span class="material-symbols-outlined" data-icon="add_circle">add_circle</span>
+                Tambah Pesanan Lain
+            </button>
+</section>
+<!-- Order Summary Section -->
+<section class="w-full md:w-[380px] flex flex-col gap-md">
+<!-- Promo Code -->
+<div class="bg-surface-container-lowest p-md rounded-xl border border-oat-milk shadow-[0_1px_3px_rgba(61,43,31,0.06)]">
+<h3 class="font-headline-h3 text-headline-h3 text-primary mb-md">Promo</h3>
+<div class="flex gap-sm">
+<input class="flex-1 bg-vanilla-mist border-oat-milk text-primary focus:border-primary focus:ring-0 rounded-lg placeholder:text-[#B5A99A] font-body-md text-body-md" placeholder="Masukkan kode promo" type="text"/>
+<button class="bg-secondary-container text-on-secondary-container px-lg rounded-lg font-body-md text-body-md hover:bg-secondary-fixed transition-colors active:scale-95">Pakai</button>
+</div>
+</div>
+<!-- Summary Card -->
+<div class="bg-surface-container-lowest p-lg rounded-xl border border-oat-milk shadow-[0_1px_3px_rgba(61,43,31,0.06)] flex flex-col gap-md relative overflow-hidden">
+<div class="absolute top-0 right-0 w-32 h-32 bg-latte-beige rounded-full -mr-16 -mt-16 opacity-50 pointer-events-none"></div>
+<h3 class="font-headline-h3 text-headline-h3 text-primary z-10">Ringkasan Pesanan</h3>
+<div class="flex flex-col gap-sm z-10">
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Subtotal (3 item)</span>
+<span>Rp 115.000</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-success-green">
+<span>Diskon Promo</span>
+<span>- Rp 15.000</span>
+</div>
+<div class="flex justify-between font-body-md text-body-md text-on-surface-variant">
+<span>Biaya Layanan</span>
+<span>Rp 2.000</span>
+</div>
+</div>
+<div class="h-px bg-surface-variant w-full my-xs z-10"></div>
+<div class="flex justify-between items-center z-10">
+<span class="font-headline-h2 text-headline-h2 text-primary">Total</span>
+<span class="font-price-display text-price-display text-primary">Rp 102.000</span>
+</div>
+<button class="mt-sm w-full bg-primary-container text-on-primary py-md rounded-lg font-headline-h3 text-headline-h3 hover:bg-primary transition-colors active:scale-97 shadow-[0_4px_12px_rgba(61,43,31,0.08)] z-10">
+                    Pesan Sekarang
+                </button>
+</div>
+</section>
+</main>
+<!-- Bottom Navigation (Mobile) -->
+<nav class="md:hidden fixed bottom-0 w-full z-50 rounded-t-xl bg-surface/95 backdrop-blur-md shadow-[0_-4px_12px_rgba(61,43,31,0.08)]">
+<div class="flex justify-around items-center px-4 py-2 pb-safe">
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-latte-beige p-2 rounded-lg active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="home">home</span>
+<span class="font-caption text-caption mt-1">Home</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-latte-beige p-2 rounded-lg active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="coffee_maker">coffee_maker</span>
+<span class="font-caption text-caption mt-1">Menu</span>
+</a>
+<a class="flex flex-col items-center justify-center bg-primary-container text-on-primary-container rounded-full px-4 py-1 active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined fill" data-icon="shopping_bag">shopping_bag</span>
+<span class="font-caption text-caption mt-1">Cart</span>
+</a>
+<a class="flex flex-col items-center justify-center text-on-surface-variant hover:bg-latte-beige p-2 rounded-lg active:scale-95 transition-transform duration-200" href="#">
+<span class="material-symbols-outlined" data-icon="person">person</span>
+<span class="font-caption text-caption mt-1">Profile</span>
+</a>
+</div>
+</nav>
+<script>
+        // Simple script to handle counter logic visually
+        document.querySelectorAll('button').forEach(button => {
+            button.addEventListener('click', function() {
+                const icon = this.querySelector('.material-symbols-outlined');
+                if(!icon) return;
+                
+                if (icon.getAttribute('data-icon') === 'add') {
+                    let span = this.previousElementSibling;
+                    if(span && span.tagName === 'SPAN' && !isNaN(span.innerText)) {
+                        span.innerText = parseInt(span.innerText) + 1;
+                    }
+                } else if (icon.getAttribute('data-icon') === 'remove') {
+                    let span = this.nextElementSibling;
+                    if(span && span.tagName === 'SPAN' && !isNaN(span.innerText)) {
+                        let val = parseInt(span.innerText);
+                        if (val > 1) span.innerText = val - 1;
+                    }
+                }
+            });
+        });
+    </script>
+</body></html>

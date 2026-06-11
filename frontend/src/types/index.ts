@@ -1,0 +1,143 @@
+// ═══════════════════════════════════════════
+// Solaria's CoffeeShop — TypeScript Types
+// ═══════════════════════════════════════════
+
+export interface Category {
+  id: string;
+  name: string;
+  description?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface MenuItem {
+  id: string;
+  name: string;
+  description?: string;
+  price: number;
+  categoryId: string;
+  category?: Category;
+  imageUrl?: string;
+  isAvailable: boolean;
+  stock: number;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface CartItem {
+  menuItem: MenuItem;
+  quantity: number;
+  notes?: string;
+}
+
+export interface Table {
+  id: string;
+  number: number;
+  qrCode?: string;
+  isActive: boolean;
+}
+
+export type OrderStatus =
+  | 'PENDING'
+  | 'CONFIRMED'
+  | 'PREPARING'
+  | 'READY'
+  | 'COMPLETED'
+  | 'CANCELLED';
+
+export type PaymentStatus =
+  | 'PENDING'
+  | 'PAID'
+  | 'FAILED'
+  | 'REFUNDED';
+
+export type PaymentMethod =
+  | 'QRIS'
+  | 'BANK_TRANSFER'
+  | 'CASH';
+
+export interface OrderItem {
+  id: string;
+  menuItemId: string;
+  menuItem?: MenuItem;
+  quantity: number;
+  price: number;
+  notes?: string;
+}
+
+export interface Order {
+  id: string;
+  orderNumber: string;
+  tableId: string;
+  table?: Table;
+  memberId?: string;
+  status: OrderStatus;
+  items: OrderItem[];
+  subtotal: number;
+  discount: number;
+  total: number;
+  notes?: string;
+  createdAt: string;
+  updatedAt: string;
+}
+
+export interface Payment {
+  id: string;
+  orderId: string;
+  order?: Order;
+  method: PaymentMethod;
+  status: PaymentStatus;
+  amount: number;
+  createdAt: string;
+}
+
+export interface Member {
+  id: string;
+  name: string;
+  email: string;
+  phone?: string;
+  points: number;
+  createdAt: string;
+}
+
+export interface Discount {
+  id: string;
+  name: string;
+  description?: string;
+  percentage: number;
+  isActive: boolean;
+  startDate: string;
+  endDate: string;
+  createdAt: string;
+}
+
+export interface InventoryLog {
+  id: string;
+  menuItemId: string;
+  menuItem?: MenuItem;
+  previousStock: number;
+  newStock: number;
+  reason: string;
+  createdAt: string;
+}
+
+export interface DashboardStats {
+  totalRevenue: number;
+  totalOrders: number;
+  totalItemsSold: number;
+  totalMembers: number;
+}
+
+export interface ApiResponse<T> {
+  data: T;
+  message?: string;
+  statusCode: number;
+}
+
+export interface PaginatedResponse<T> {
+  data: T[];
+  total: number;
+  page: number;
+  limit: number;
+  totalPages: number;
+}
