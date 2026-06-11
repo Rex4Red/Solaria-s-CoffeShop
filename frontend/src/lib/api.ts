@@ -109,11 +109,17 @@ export const api = {
       fetchApi<import('@/types').MenuItem[]>('/menu', { params }),
     getById: (id: string) =>
       fetchApi<import('@/types').MenuItem>(`/menu/${id}`),
-    create: (formData: FormData) =>
-      fetchApi('/menu', {
+    create: (data: {
+      name: string;
+      description?: string;
+      price: number;
+      categoryId?: string;
+      stock?: number;
+      isAvailable?: boolean;
+    }) =>
+      fetchApi<import('@/types').MenuItem>('/menu', {
         method: 'POST',
-        body: formData,
-        headers: {}, // Let browser set multipart headers
+        body: JSON.stringify(data),
       }),
     update: (id: string, data: unknown) =>
       fetchApi(`/menu/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
