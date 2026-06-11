@@ -66,8 +66,8 @@ export default function CustomerLayout({
         {children}
       </main>
 
-      {/* Mobile Bottom Nav — hanya tampil setelah scan QR meja */}
-      {hasSession && <BottomNav />}
+      {/* Mobile Bottom Nav — tidak tampil di welcome (layar nomor meja) & order-success */}
+      {hasSession && !isPublic && <BottomNav />}
     </div>
   );
 }
