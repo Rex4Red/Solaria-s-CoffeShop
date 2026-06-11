@@ -16,12 +16,27 @@ export default function AdminCategoriesPage() {
 
   const handleAdd = async () => {
     if (!newName.trim()) return;
-    try { const cat = await api.categories.create({ name: newName.trim() }) as CategoryItem; setCategories([...categories, cat]); setNewName(''); toast.success('Kategori ditambahkan'); } catch { toast.error('Gagal menambah'); }
+    try {
+      const cat = await api.categories.create({ name: newName.trim() }) as CategoryItem;
+      setCategories([...categories, cat]);
+      setNewName('');
+      toast.success('Kategori ditambahkan');
+    } catch (err) {
+      const msg = err instanceof Error && err.message ? err.message : 'Gagal menambah';
+      toast.error(msg);
+    }
   };
 
   const handleDelete = async (id: string) => {
     if (!confirm('Hapus kategori?')) return;
-    try { await api.categories.delete(id); setCategories(categories.filter(c => c.id !== id)); toast.success('Dihapus'); } catch { toast.error('Gagal menghapus'); }
+    try {
+      await api.categories.delete(id);
+      setCategories(categories.filter(c => c.id !== id));
+      toast.success('Dihapus');
+    } catch (err) {
+      const msg = err instanceof Error && err.message ? err.message : 'Gagal menghapus';
+      toast.error(msg);
+    }
   };
 
   return (
