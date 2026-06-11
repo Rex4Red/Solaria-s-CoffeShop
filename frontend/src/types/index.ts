@@ -98,14 +98,22 @@ export interface Member {
   createdAt: string;
 }
 
+export interface DiscountItem {
+  id: string;
+  menuItemId: string;
+  menuItem?: { id: string; name: string; price: number };
+}
+
 export interface Discount {
   id: string;
   name: string;
-  description?: string;
-  percentage: number;
+  type: 'percentage' | 'fixed';
+  value: number;
+  startAt: string;
+  endAt: string;
   isActive: boolean;
-  startDate: string;
-  endDate: string;
+  appliesToAll: boolean;
+  items?: DiscountItem[];
   createdAt: string;
 }
 
