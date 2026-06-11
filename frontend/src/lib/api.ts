@@ -35,8 +35,10 @@ async function fetchApi<T>(endpoint: string, options: FetchOptions = {}): Promis
     if (qs) url += `?${qs}`;
   }
 
+  const isFormData = typeof FormData !== 'undefined' && init.body instanceof FormData;
   const headers: HeadersInit = {
-    'Content-Type': 'application/json',
+    // Jangan set Content-Type untuk FormData — biarkan browser menambah boundary multipart
+    ...(isFormData ? {} : { 'Content-Type': 'application/json' }),
     ...(init.headers || {}),
   };
 
@@ -123,6 +125,14 @@ export const api = {
       }),
     update: (id: string, data: unknown) =>
       fetchApi(`/menu/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
+    uploadImage: (id: string, file: File) => {
+      const fd = new FormData();
+      fd.append('image', file);
+      return fetchApi<import('@/types').MenuItem>(`/menu/${id}/image`, {
+        method: 'POST',
+        body: fd,
+      });
+    },
     delete: (id: string) =>
       fetchApi(`/menu/${id}`, { method: 'DELETE' }),
   },

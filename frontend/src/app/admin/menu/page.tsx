@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Search, Edit2, Trash2, X, Loader2 } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, X, Loader2, Upload, Image as ImageIcon } from 'lucide-react';
 import api from '@/lib/api';
 import { formatRupiah } from '@/lib/utils';
 import type { MenuItem } from '@/types';
@@ -19,6 +19,8 @@ export default function AdminMenuPage() {
   const [showModal, setShowModal] = useState(false);
   const [editing, setEditing] = useState<MenuItem | null>(null);
   const [saving, setSaving] = useState(false);
+  const [imageFile, setImageFile] = useState<File | null>(null);
+  const [imagePreview, setImagePreview] = useState<string>('');
   const [form, setForm] = useState({
     name: '',
     description: '',
@@ -40,6 +42,8 @@ export default function AdminMenuPage() {
   const openAdd = () => {
     setEditing(null);
     setForm({ name: '', description: '', price: '', categoryId: categories[0]?.id || '', stock: '', isAvailable: true });
+    setImageFile(null);
+    setImagePreview('');
     setShowModal(true);
   };
 
@@ -53,7 +57,18 @@ export default function AdminMenuPage() {
       stock: String(item.stock ?? ''),
       isAvailable: item.isAvailable,
     });
+    setImageFile(null);
+    setImagePreview(item.imageUrl || '');
     setShowModal(true);
+  };
+
+  const handlePickImage = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const file = e.target.files?.[0];
+    if (!file) return;
+    if (!file.type.startsWith('image/')) { toast.error('File harus berupa gambar'); return; }
+    if (file.size > 5 * 1024 * 1024) { toast.error('Ukuran gambar maksimal 5MB'); return; }
+    setImageFile(file);
+    setImagePreview(URL.createObjectURL(file));
   };
 
   const closeModal = () => { if (!saving) setShowModal(false); };
@@ -73,13 +88,18 @@ export default function AdminMenuPage() {
 
     setSaving(true);
     try {
+      let targetId = editing?.id;
       if (editing) {
         await api.menu.update(editing.id, payload);
-        toast.success('Menu diperbarui');
       } else {
-        await api.menu.create(payload);
-        toast.success('Menu ditambahkan');
+        const created = await api.menu.create(payload);
+        targetId = created.id;
       }
+      // Upload foto jika ada file baru dipilih
+      if (imageFile && targetId) {
+        await api.menu.uploadImage(targetId, imageFile);
+      }
+      toast.success(editing ? 'Menu diperbarui' : 'Menu ditambahkan');
       await refresh();
       setShowModal(false);
     } catch {
@@ -168,6 +188,27 @@ export default function AdminMenuPage() {
               <button onClick={closeModal} className="p-1.5 rounded-lg hover:bg-latte-beige text-on-surface-variant"><X size={18} /></button>
             </div>
             <div className="p-5 space-y-4">
+              <div>
+                <label className="block text-sm font-medium mb-1.5">Foto Menu</label>
+                <div className="flex items-center gap-4">
+                  <div className="w-20 h-20 rounded-xl border border-oat-milk bg-vanilla-mist overflow-hidden flex items-center justify-center shrink-0">
+                    {imagePreview ? (
+                      // eslint-disable-next-line @next/next/no-img-element
+                      <img src={imagePreview} alt="preview" className="w-full h-full object-cover" />
+                    ) : (
+                      <ImageIcon size={24} className="text-outline-variant" />
+                    )}
+                  </div>
+                  <div className="flex-grow">
+                    <label className="inline-flex items-center gap-2 px-4 py-2 rounded-xl border border-oat-milk text-sm font-medium text-primary hover:bg-latte-beige cursor-pointer">
+                      <Upload size={15} />
+                      {imagePreview ? 'Ganti Foto' : 'Pilih Foto'}
+                      <input type="file" accept="image/*" onChange={handlePickImage} className="hidden" />
+                    </label>
+                    <p className="text-xs text-outline mt-1.5">JPG/PNG/WebP, maks 5MB</p>
+                  </div>
+                </div>
+              </div>
               <div>
                 <label className="block text-sm font-medium mb-1.5">Nama Menu *</label>
                 <input value={form.name} onChange={e => setForm(f => ({ ...f, name: e.target.value }))} placeholder="Contoh: Cappuccino" className="w-full bg-vanilla-mist border border-oat-milk rounded-xl px-4 py-2.5 text-sm focus:outline-none focus:border-primary" />
