@@ -21,11 +21,27 @@ export default function KasirPage() {
   useEffect(() => { fetchOrders(); const i = setInterval(fetchOrders, 10000); return () => clearInterval(i); }, []);
 
   const handleConfirm = async (id: string) => {
-    try { await api.orders.confirm(id); toast.success('Pesanan dikonfirmasi'); fetchOrders(); } catch { toast.error('Gagal konfirmasi'); }
+    const prev = orders;
+    setOrders((cur) => cur.filter((o) => o.id !== id)); // optimistic: langsung hilang
+    try {
+      await api.orders.confirm(id);
+      toast.success('Pesanan dikonfirmasi');
+    } catch {
+      toast.error('Gagal konfirmasi');
+      setOrders(prev); // restore kalau gagal
+    }
   };
 
   const handleCancel = async (id: string) => {
-    try { await api.orders.cancel(id); toast.success('Pesanan ditolak'); fetchOrders(); } catch { toast.error('Gagal menolak'); }
+    const prev = orders;
+    setOrders((cur) => cur.filter((o) => o.id !== id)); // optimistic: langsung hilang
+    try {
+      await api.orders.cancel(id);
+      toast.success('Pesanan ditolak');
+    } catch {
+      toast.error('Gagal menolak');
+      setOrders(prev); // restore kalau gagal
+    }
   };
 
   return (
