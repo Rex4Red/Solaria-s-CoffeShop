@@ -114,9 +114,13 @@ export const api = {
   // Tables
   tables: {
     getAll: () =>
-      fetchApi<import('@/types').Table[]>('/tables'),
+      fetchApi<{ id: string; tableNumber: number; qrToken: string; isActive: boolean }[]>('/tables'),
     getById: (id: string) =>
       fetchApi<import('@/types').Table>(`/tables/${id}`),
+    verify: (qrToken: string) =>
+      fetchApi<{ id: string; tableNumber: number; isActive: boolean }>(`/tables/verify/${qrToken}`),
+    getQrCodes: () =>
+      fetchApi<{ tableNumber: number; qrDataUrl: string }[]>('/tables/qr/all'),
   },
 
   // Orders
@@ -182,16 +186,6 @@ export const api = {
       fetchApi(`/discounts/${id}`, { method: 'PATCH', body: JSON.stringify(data) }),
     delete: (id: string) =>
       fetchApi(`/discounts/${id}`, { method: 'DELETE' }),
-  },
-
-  // Tables
-  tables: {
-    getAll: () =>
-      fetchApi<{ id: string; tableNumber: number; qrToken: string; isActive: boolean }[]>('/tables'),
-    verify: (qrToken: string) =>
-      fetchApi<{ id: string; tableNumber: number; isActive: boolean }>(`/tables/verify/${qrToken}`),
-    getQrCodes: () =>
-      fetchApi<{ tableNumber: number; qrDataUrl: string }[]>('/tables/qr/all'),
   },
 
   // Stats
