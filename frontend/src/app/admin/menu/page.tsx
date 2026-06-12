@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Plus, Search, Edit2, Trash2, X, Loader2, Upload, Image as ImageIcon } from 'lucide-react';
+import { Plus, Search, Edit2, Trash2, X, Loader2, Upload, Image as ImageIcon, Coffee } from 'lucide-react';
 import api from '@/lib/api';
 import { formatRupiah } from '@/lib/utils';
 import type { MenuItem } from '@/types';
@@ -146,45 +146,48 @@ export default function AdminMenuPage() {
         <input value={search} onChange={e => setSearch(e.target.value)} placeholder="Cari menu..." className="w-full bg-vanilla-mist border border-oat-milk rounded-xl py-2.5 pl-10 pr-4 text-sm focus:outline-none focus:border-primary" />
       </div>
 
-      <div className="bg-surface-bright border border-oat-milk rounded-xl overflow-hidden">
-        {loading ? <div className="p-8 text-center animate-pulse">Memuat...</div> : (
-          <div className="overflow-x-auto">
-            <table className="w-full text-sm">
-              <thead className="bg-vanilla-mist">
-                <tr>
-                  <th className="text-left px-4 py-3 font-semibold text-on-surface-variant">Nama</th>
-                  <th className="text-left px-4 py-3 font-semibold text-on-surface-variant hidden md:table-cell">Kategori</th>
-                  <th className="text-left px-4 py-3 font-semibold text-on-surface-variant">Harga</th>
-                  <th className="text-left px-4 py-3 font-semibold text-on-surface-variant">Stok</th>
-                  <th className="text-left px-4 py-3 font-semibold text-on-surface-variant">Status</th>
-                  <th className="text-right px-4 py-3 font-semibold text-on-surface-variant">Aksi</th>
-                </tr>
-              </thead>
-              <tbody>
-                {filtered.map((item) => (
-                  <tr key={item.id} className="border-t border-oat-milk hover:bg-vanilla-mist/50">
-                    <td className="px-4 py-3 font-semibold">{item.name}</td>
-                    <td className="px-4 py-3 hidden md:table-cell text-on-surface-variant">{getCategoryName(item.categoryId)}</td>
-                    <td className="px-4 py-3 font-mono">{formatRupiah(item.price)}</td>
-                    <td className="px-4 py-3 font-mono">{item.stock}</td>
-                    <td className="px-4 py-3">
-                      <button onClick={() => handleToggle(item)} className={`relative w-10 h-5 rounded-full transition-colors ${item.isAvailable ? 'bg-success-green' : 'bg-surface-variant'}`}>
-                        <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${item.isAvailable ? 'left-5.5' : 'left-0.5'}`} />
-                      </button>
-                    </td>
-                    <td className="px-4 py-3 text-right">
-                      <div className="flex justify-end gap-1">
-                        <button onClick={() => openEdit(item)} className="p-1.5 rounded-lg hover:bg-latte-beige text-on-surface-variant"><Edit2 size={14} /></button>
-                        <button onClick={() => handleDelete(item.id)} className="p-1.5 rounded-lg hover:bg-error-container text-error-rose"><Trash2 size={14} /></button>
-                      </div>
-                    </td>
-                  </tr>
-                ))}
-              </tbody>
-            </table>
-          </div>
-        )}
-      </div>
+      {loading ? (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {[...Array(8)].map((_, i) => <div key={i} className="h-56 bg-surface-container-low rounded-xl animate-pulse" />)}
+        </div>
+      ) : filtered.length === 0 ? (
+        <div className="text-center py-16 text-on-surface-variant">Menu tidak ditemukan</div>
+      ) : (
+        <div className="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4">
+          {filtered.map((item) => (
+            <div key={item.id} className="bg-surface-bright border border-oat-milk rounded-xl overflow-hidden flex flex-col">
+              <div className="aspect-square relative bg-surface-container-low">
+                {item.imageUrl ? (
+                  // eslint-disable-next-line @next/next/no-img-element
+                  <img src={item.imageUrl} alt={item.name} className="w-full h-full object-cover" />
+                ) : (
+                  <div className="w-full h-full flex items-center justify-center text-outline-variant"><Coffee size={36} /></div>
+                )}
+                {!item.isAvailable && (
+                  <div className="absolute inset-0 bg-surface/60 backdrop-blur-[1px] flex items-center justify-center">
+                    <span className="bg-error-rose/90 text-white text-xs font-semibold px-2.5 py-1 rounded-full">Nonaktif</span>
+                  </div>
+                )}
+              </div>
+              <div className="p-3 flex flex-col flex-grow">
+                <h3 className="font-sans font-semibold text-sm leading-snug line-clamp-1">{item.name}</h3>
+                <p className="text-xs text-on-surface-variant mb-1">{getCategoryName(item.categoryId)}</p>
+                <p className="font-mono font-bold text-primary text-sm">{formatRupiah(item.price)}</p>
+                <p className="text-xs text-on-surface-variant mb-3">Stok: {item.stock}</p>
+                <div className="mt-auto flex items-center justify-between pt-2 border-t border-oat-milk">
+                  <button onClick={() => handleToggle(item)} title={item.isAvailable ? 'Nonaktifkan' : 'Aktifkan'} className={`relative w-10 h-5 rounded-full transition-colors ${item.isAvailable ? 'bg-success-green' : 'bg-surface-variant'}`}>
+                    <span className={`absolute top-0.5 w-4 h-4 rounded-full bg-white shadow transition-transform ${item.isAvailable ? 'left-5.5' : 'left-0.5'}`} />
+                  </button>
+                  <div className="flex gap-1">
+                    <button onClick={() => openEdit(item)} className="p-1.5 rounded-lg hover:bg-latte-beige text-on-surface-variant"><Edit2 size={14} /></button>
+                    <button onClick={() => handleDelete(item.id)} className="p-1.5 rounded-lg hover:bg-error-container text-error-rose"><Trash2 size={14} /></button>
+                  </div>
+                </div>
+              </div>
+            </div>
+          ))}
+        </div>
+      )}
 
       {/* Modal Tambah/Edit Menu */}
       {showModal && (
