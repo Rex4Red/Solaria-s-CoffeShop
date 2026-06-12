@@ -1,7 +1,7 @@
 'use client';
 
 import { useState, useEffect } from 'react';
-import { Check, X, Clock, RefreshCw } from 'lucide-react';
+import { Check, X, Clock, RefreshCw, Loader2 } from 'lucide-react';
 import api from '@/lib/api';
 import { formatRupiah, formatRelativeTime, getStatusLabel, getOrderNumber, cn } from '@/lib/utils';
 import type { Order } from '@/types';
@@ -10,6 +10,7 @@ import toast from 'react-hot-toast';
 export default function KasirPage() {
   const [orders, setOrders] = useState<Order[]>([]);
   const [loading, setLoading] = useState(true);
+  const [processing, setProcessing] = useState<Record<string, 'confirm' | 'cancel'>>({});
 
   const fetchOrders = async () => {
     try {
@@ -21,26 +22,28 @@ export default function KasirPage() {
   useEffect(() => { fetchOrders(); const i = setInterval(fetchOrders, 10000); return () => clearInterval(i); }, []);
 
   const handleConfirm = async (id: string) => {
-    const prev = orders;
-    setOrders((cur) => cur.filter((o) => o.id !== id)); // optimistic: langsung hilang
+    setProcessing((p) => ({ ...p, [id]: 'confirm' }));
     try {
       await api.orders.confirm(id);
       toast.success('Pesanan dikonfirmasi');
+      setOrders((cur) => cur.filter((o) => o.id !== id)); // hilang setelah sukses
     } catch {
       toast.error('Gagal konfirmasi');
-      setOrders(prev); // restore kalau gagal
+    } finally {
+      setProcessing((p) => { const n = { ...p }; delete n[id]; return n; });
     }
   };
 
   const handleCancel = async (id: string) => {
-    const prev = orders;
-    setOrders((cur) => cur.filter((o) => o.id !== id)); // optimistic: langsung hilang
+    setProcessing((p) => ({ ...p, [id]: 'cancel' }));
     try {
       await api.orders.cancel(id);
       toast.success('Pesanan ditolak');
+      setOrders((cur) => cur.filter((o) => o.id !== id)); // hilang setelah sukses
     } catch {
       toast.error('Gagal menolak');
-      setOrders(prev); // restore kalau gagal
+    } finally {
+      setProcessing((p) => { const n = { ...p }; delete n[id]; return n; });
     }
   };
 
@@ -95,11 +98,11 @@ export default function KasirPage() {
               <div className="border-t border-oat-milk pt-3 flex justify-between items-center">
                 <span className="font-mono font-bold text-primary">{formatRupiah(order.grandTotal)}</span>
                 <div className="flex gap-2">
-                  <button onClick={() => handleCancel(order.id)} className="px-4 py-2 rounded-lg border border-error-rose text-error-rose text-sm font-medium hover:bg-error-rose/5 active:scale-95 transition-all flex items-center gap-1.5">
-                    <X size={14} />Tolak
+                  <button onClick={() => handleCancel(order.id)} disabled={!!processing[order.id]} className="px-4 py-2 rounded-lg border border-error-rose text-error-rose text-sm font-medium hover:bg-error-rose/5 active:scale-95 transition-all flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed">
+                    {processing[order.id] === 'cancel' ? <Loader2 size={14} className="animate-spin" /> : <X size={14} />}Tolak
                   </button>
-                  <button onClick={() => handleConfirm(order.id)} className="px-4 py-2 rounded-lg bg-success-green text-white text-sm font-medium hover:bg-success-green/90 active:scale-95 transition-all flex items-center gap-1.5">
-                    <Check size={14} />Konfirmasi
+                  <button onClick={() => handleConfirm(order.id)} disabled={!!processing[order.id]} className="px-4 py-2 rounded-lg bg-success-green text-white text-sm font-medium hover:bg-success-green/90 active:scale-95 transition-all flex items-center gap-1.5 disabled:opacity-50 disabled:cursor-not-allowed">
+                    {processing[order.id] === 'confirm' ? <Loader2 size={14} className="animate-spin" /> : <Check size={14} />}Konfirmasi
                   </button>
                 </div>
               </div>
